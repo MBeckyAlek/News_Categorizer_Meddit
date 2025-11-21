@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meddit - African News Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- HEADER: Fixed top bar with logo and search -->
+    <header>
+        <!-- Left side: Menu button and logo -->
+        <div class="header-left">
+            <button class="menu-btn" aria-label="Menu">☰</button>
+            <h1 class="logo">Meddit</h1>
+            <span class="tagline">African News</span>
+        </div>
+
+        <!-- Right side: Search and user profile -->
+        <div class="header-right">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search African news...">
+                <button id="search-btn">Search</button>
+            </div>
+            <button class="profile-btn" aria-label="User Profile">👤</button>
+        </div>
+    </header>
+    </header>
+    
+    <!-- ADD SIDEBAR HERE -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <button class="close-btn">&times;</button>
+            <h2>Menu</h2>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link">Home</a>
+                <a href="#" class="sidebar-link">Categories</a>
+                <a href="#" class="sidebar-link">Saved Articles</a>
+                <a href="#" class="sidebar-link">Settings</a>
+                <a href="#" class="sidebar-link">About</a>
+            </nav>
+        </div>
+    </div>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    
+    <div class="page-wrapper">
+
+    <!-- MAIN CONTENT WRAPPER: Everything below the header -->
+    <div class="page-wrapper">
+
+        <!-- CATEGORY NAVIGATION: Horizontal scrolling news categories -->
+        <nav class="category-nav">
+            <button class="category-btn active" data-category="General">General</button>
+            <button class="category-btn" data-category="Business">Business</button>
+            <button class="category-btn" data-category="Entertainment">Entertainment</button>
+            <button class="category-btn" data-category="Health">Health</button>
+            <button class="category-btn" data-category="Science">Science</button>
+            <button class="category-btn" data-category="Sports">Sports</button>
+            <button class="category-btn" data-category="Technology">Technology</button>
+            <button class="category-btn" data-category="travel">Travel</button>
+            <button class="category-btn" data-category="Politics">Politics</button>
+            <button class="category-btn" data-category="African History">History</button>
+            <button class="category-btn" data-category="Literature">Literature</button>
+            <button class="category-btn" data-category="Fashion">Fashion</button>
+            <button class="category-btn" data-category="Food">Food</button>
+        </nav>
+
+        <!-- SORT BAR: Dropdown to sort news articles -->
+        <div class="sort-bar">
+            <label for="sort-options">Sort by:</label>
+            <select id="sort-options">
+                <option value="publishedAt">Newest First</option>
+                <option value="relevance">Most Relevant</option>
+                <option value="popularity">Most Popular</option>
+            </select>
+        </div>
+
+        <!-- LOADING INDICATOR: Shows when fetching news -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading African news...</p>
+        </div>
+
+        <!-- ERROR MESSAGE: Shows when something goes wrong -->
+        <div id="error-message" class="error-message hidden"></div>
+
+        <!-- ARTICLES GRID: Main content area for news cards -->
+        <main id="articles-container" class="articles-grid">
+            <!-- News cards will be dynamically inserted here by JavaScript -->
+        </main>
+    </div>
+
+    <!-- FOOTER: Bottom section with credits -->
+    <footer>
+        <p>Meddit - Bringing African stories to the world</p>
+        <p class="credits">Powered by NewsAPI | &copy; 2024 All rights reserved</p>
+    </footer>
+
+    <!-- JAVASCRIPT FILES: Load scripts in order -->
+    <script src="config.js"></script>
+    <script src="cache.js"></script>
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

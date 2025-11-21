@@ -1,0 +1,570 @@
+/* ========================================
+   1. GLOBAL RESET & BASE STYLES
+   ======================================== */
+
+/* Remove default spacing and set box-sizing for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main page setup: full height, modern font, light background */
+html,
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background-color: #DAE0E6;
+    /* Light gray-blue background like Reddit */
+    color: #1c1c1c;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ========================================
+   2. HEADER SECTION (Top Navigation Bar)
+   ======================================== */
+
+/* Fixed header at top of page */
+header {
+    background-color: #ffffff;
+    padding: 0 20px;
+    border-bottom: 1px solid #ccc;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    /* Standard Reddit header height */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Left side of header: menu button + logo + tagline */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Menu button (hamburger icon) */
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    color: #1c1c1c;
+    border-radius: 4px;
+    /* Subtle rounded corners */
+    transition: background-color 0.2s;
+}
+
+.menu-btn:hover {
+    background-color: #f6f7f8;
+    /* Light gray hover effect */
+}
+
+/* Main logo text */
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0079D3;
+    /* Reddit-style blue */
+    letter-spacing: -0.5px;
+    cursor: pointer;
+}
+
+/* Tagline next to logo */
+.tagline {
+    font-size: 12px;
+    color: #7c7c7c;
+    font-weight: 500;
+    padding: 4px 8px;
+    background-color: #f6f7f8;
+    border-radius: 4px;
+}
+
+/* Right side of header: search bar + profile button */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Search bar container */
+.search-bar {
+    display: flex;
+    gap: 0;
+    /* No gap between input and button */
+}
+
+/* Search input field */
+#search-input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-right: none;
+    /* Remove right border to connect with button */
+    font-size: 14px;
+    width: 250px;
+    outline: none;
+    border-radius: 4px 0 0 4px;
+    /* Round left corners only */
+}
+
+#search-input:focus {
+    border-color: #0079D3;
+    /* Blue border when typing */
+}
+
+/* Search button */
+#search-btn {
+    padding: 8px 16px;
+    background-color: #0079D3;
+    color: white;
+    border: 1px solid #0079D3;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 0 4px 4px 0;
+    /* Round right corners only */
+    transition: background-color 0.2s;
+}
+
+#search-btn:hover {
+    background-color: #006cbf;
+    /* Darker blue on hover */
+}
+
+/* Profile button */
+.profile-btn {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.profile-btn:hover {
+    background-color: #f6f7f8;
+    border-color: #0079D3;
+}
+
+/* ========================================
+   3. PAGE WRAPPER (Content Below Header)
+   ======================================== */
+
+/* Main content area: push down to avoid header overlap */
+.page-wrapper {
+    padding-top: 56px;
+    /* Same as header height */
+    min-height: calc(100vh - 56px);
+    /* Full height minus header */
+}
+
+/* ========================================
+   4. CATEGORY NAVIGATION (News Categories)
+   ======================================== */
+
+/* Sticky category bar below header */
+.category-nav {
+    background-color: #ffffff;
+    padding: 12px 20px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #edeff1;
+    position: sticky;
+    top: 56px;
+    /* Stick below header */
+    z-index: 999;
+    overflow-x: auto;
+    /* Allow horizontal scrolling on mobile */
+    white-space: nowrap;
+}
+
+/* Hide scrollbar but keep functionality */
+.category-nav::-webkit-scrollbar {
+    height: 0;
+}
+
+/* Individual category buttons */
+.category-btn {
+    padding: 6px 16px;
+    background-color: transparent;
+    color: #1c1c1c;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    /* Pill-shaped buttons */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    /* Prevent buttons from shrinking */
+}
+
+.category-btn:hover {
+    background-color: #f6f7f8;
+    border-color: #0079D3;
+}
+
+/* Active/selected category button */
+.category-btn.active {
+    background-color: #0079D3;
+    color: white;
+    border-color: #0079D3;
+}
+
+/* ========================================
+   5. SORT BAR (Dropdown to Sort Articles)
+   ======================================== */
+
+/* Sort dropdown container */
+.sort-bar {
+    background-color: #ffffff;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #edeff1;
+}
+
+.sort-bar label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #7c7c7c;
+}
+
+/* Sort dropdown select */
+#sort-options {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: white;
+    outline: none;
+}
+
+#sort-options:focus {
+    border-color: #0079D3;
+}
+
+/* ========================================
+   6. LOADING & ERROR STATES
+   ======================================== */
+
+/* Loading container */
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Spinning loader animation */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #edeff1;
+    border-top-color: #0079D3;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading p {
+    font-size: 16px;
+    color: #7c7c7c;
+}
+
+/* Error message box */
+.error-message {
+    background-color: #fee;
+    border: 1px solid #fcc;
+    color: #c00;
+    padding: 16px;
+    margin: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Hide elements with this class */
+.hidden {
+    display: none !important;
+}
+
+/* ========================================
+   7. ARTICLES GRID (Main Content Area)
+   ======================================== */
+
+/* Grid container for news cards */
+.articles-grid {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    /* Responsive columns */
+    gap: 16px;
+}
+
+/* Individual article card */
+.article-card {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    /* Rounded corners */
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow */
+}
+
+.article-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Lift effect on hover */
+    transform: translateY(-2px);
+    border-color: #0079D3;
+}
+
+/* Article image */
+.article-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    /* Crop image to fit */
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+/* Article title */
+.article-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1c1c;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+/* Article description/snippet */
+.article-card p {
+    font-size: 14px;
+    color: #7c7c7c;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* Article metadata (source, date, etc.) */
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #878a8c;
+}
+
+.article-source {
+    font-weight: 600;
+    color: #0079D3;
+}
+
+/* ========================================
+   8. FOOTER SECTION
+   ======================================== */
+
+/* Footer at bottom of page */
+footer {
+    background-color: #1c1c1c;
+    color: #ffffff;
+    text-align: center;
+    padding: 24px 20px;
+    margin-top: 40px;
+    border-top: 1px solid #343536;
+}
+
+footer p {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.credits {
+    font-size: 12px;
+    color: #878a8c;
+}
+
+/* ========================================
+   9. SIDEBAR MENU
+   ======================================== */
+
+/* Sidebar container - hidden by default */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    /* Hidden off-screen to the left */
+    width: 300px;
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease;
+    z-index: 2000;
+    overflow-y: auto;
+    /* Allow scrolling if content is long */
+}
+
+/* When sidebar is open - slide in from left */
+.sidebar.open {
+    left: 0;
+}
+
+/* Sidebar content wrapper */
+.sidebar-content {
+    padding: 20px;
+}
+
+/* Close button (X) in sidebar */
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: #7c7c7c;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #1c1c1c;
+}
+
+/* Menu heading in sidebar */
+.sidebar h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #0079D3;
+    font-size: 24px;
+}
+
+/* Sidebar navigation links container */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Individual sidebar links */
+.sidebar-link {
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #1c1c1c;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    display: block;
+}
+
+.sidebar-link:hover {
+    background-color: #f6f7f8;
+    color: #0079D3;
+}
+
+/* Dark overlay behind sidebar when open */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1999;
+}
+
+/* When overlay is active - show it */
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========================================
+   10. RESPONSIVE DESIGN (Mobile Adjustments)
+   ======================================== */
+
+/* Tablets and smaller screens */
+@media (max-width: 768px) {
+
+    /* Simplify header layout */
+    .header-left {
+        gap: 8px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    /* Hide tagline on small screens */
+    .tagline {
+        display: none;
+    }
+
+    /* Make search bar smaller */
+    #search-input {
+        width: 180px;
+    }
+
+    /* Single column grid on mobile */
+    .articles-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+
+    /* Stack header items vertically if needed */
+    header {
+        padding: 0 12px;
+    }
+
+    /* Smaller search input */
+    #search-input {
+        width: 140px;
+        font-size: 13px;
+    }
+
+    #search-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* Adjust grid padding */
+    .articles-grid {
+        padding: 0 12px;
+    }
+
+    /* Smaller article cards */
+    .article-card {
+        padding: 12px;
+    }
+
+    .article-card h3 {
+        font-size: 16px;
+    }
+}
