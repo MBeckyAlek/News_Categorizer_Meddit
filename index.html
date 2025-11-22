@@ -99,10 +99,11 @@
     </footer>
 
     <!-- JAVASCRIPT FILES: Load scripts in order -->
-    <script src="config.js"></script>
-    <script src="cache.js"></script>
-    <script src="api.js"></script>
-    <script src="script.js"></script>
-</body>
-
+    <!-- CORRECT ORDER - Very important! -->
+    <script src="config.js"></script> <!-- 1. Config first -->
+    <script src="cache.js"></script> <!-- 2. Cache second -->
+    <script src="api.js"></script> <!-- 3. API third (needs Cache) -->
+    <script src="script.js"></script> <!-- 4. Main script last -->
+    </body>
+    
 </html>
