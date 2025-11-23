@@ -9,16 +9,14 @@
 </head>
 
 <body>
-    <!-- HEADER: Fixed top bar with logo and search -->
+    <!-- Top navigation bar -->
     <header>
-        <!-- Left side: Menu button and logo -->
         <div class="header-left">
             <button class="menu-btn" aria-label="Menu">☰</button>
             <h1 class="logo">Meddit</h1>
             <span class="tagline">African News</span>
         </div>
 
-        <!-- Right side: Search and user profile -->
         <div class="header-right">
             <div class="search-bar">
                 <input type="text" id="search-input" placeholder="Search African news...">
@@ -27,83 +25,92 @@
             <button class="profile-btn" aria-label="User Profile">👤</button>
         </div>
     </header>
-    </header>
-    
-    <!-- ADD SIDEBAR HERE -->
+
+    <!-- Side menu that slides in -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-content">
             <button class="close-btn">&times;</button>
-            <h2>Menu</h2>
+            <h2>Meddit</h2>
+            <p style="color: #7c7c7c; font-size: 14px; margin-bottom: 20px;">
+                African News Hub
+            </p>
+
             <nav class="sidebar-nav">
-                <a href="#" class="sidebar-link">Home</a>
-                <a href="#" class="sidebar-link">Categories</a>
-                <a href="#" class="sidebar-link">Saved Articles</a>
-                <a href="#" class="sidebar-link">Settings</a>
-                <a href="#" class="sidebar-link">About</a>
+                <a href="#" class="sidebar-link" data-action="home">🏠 Home</a>
+                <a href="#" class="sidebar-link" data-action="about">ℹ️ About</a>
+                <a href="#" class="sidebar-link" data-action="sources">📰 Sources</a>
+
+                <!-- Dark mode switch -->
+                <div class="sidebar-setting">
+                    <span class="setting-label">🌓 Dark Mode</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
             </nav>
+
+            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; 
+                        border-top: 1px solid #edeff1; padding-top: 15px;">
+                <p style="font-size: 12px; color: #7c7c7c;">
+                    Powered by BecksMeddit
+                </p>
+            </div>
         </div>
     </div>
+
+    <!-- Dark overlay behind sidebar -->
     <div id="sidebar-overlay" class="sidebar-overlay"></div>
-    
+
+    <!-- Main content area -->
     <div class="page-wrapper">
 
-    <!-- MAIN CONTENT WRAPPER: Everything below the header -->
-    <div class="page-wrapper">
-
-        <!-- CATEGORY NAVIGATION: Horizontal scrolling news categories -->
+        <!-- Category buttons -->
         <nav class="category-nav">
-            <button class="category-btn active" data-category="General">General</button>
-            <button class="category-btn" data-category="Business">Business</button>
-            <button class="category-btn" data-category="Entertainment">Entertainment</button>
-            <button class="category-btn" data-category="Health">Health</button>
-            <button class="category-btn" data-category="Science">Science</button>
-            <button class="category-btn" data-category="Sports">Sports</button>
-            <button class="category-btn" data-category="Technology">Technology</button>
-            <button class="category-btn" data-category="travel">Travel</button>
-            <button class="category-btn" data-category="Politics">Politics</button>
-            <button class="category-btn" data-category="African History">History</button>
-            <button class="category-btn" data-category="Literature">Literature</button>
-            <button class="category-btn" data-category="Fashion">Fashion</button>
-            <button class="category-btn" data-category="Food">Food</button>
+            <button class="category-btn active" data-category="general">General</button>
+            <button class="category-btn" data-category="business">Business</button>
+            <button class="category-btn" data-category="entertainment">Entertainment</button>
+            <button class="category-btn" data-category="health">Health</button>
+            <button class="category-btn" data-category="science">Science</button>
+            <button class="category-btn" data-category="sports">Sports</button>
+            <button class="category-btn" data-category="technology">Technology</button>
         </nav>
 
-        <!-- SORT BAR: Dropdown to sort news articles -->
+        <!-- Sort dropdown -->
         <div class="sort-bar">
             <label for="sort-options">Sort by:</label>
             <select id="sort-options">
                 <option value="publishedAt">Newest First</option>
-                <option value="relevance">Most Relevant</option>
+                <option value="relevancy">Most Relevant</option>
                 <option value="popularity">Most Popular</option>
             </select>
         </div>
 
-        <!-- LOADING INDICATOR: Shows when fetching news -->
+        <!-- Loading spinner -->
         <div id="loading" class="loading hidden">
             <div class="spinner"></div>
             <p>Loading African news...</p>
         </div>
 
-        <!-- ERROR MESSAGE: Shows when something goes wrong -->
+        <!-- Error message box -->
         <div id="error-message" class="error-message hidden"></div>
 
-        <!-- ARTICLES GRID: Main content area for news cards -->
+        <!-- News articles go here -->
         <main id="articles-container" class="articles-grid">
-            <!-- News cards will be dynamically inserted here by JavaScript -->
         </main>
     </div>
 
-    <!-- FOOTER: Bottom section with credits -->
+    <!-- Footer -->
     <footer>
         <p>Meddit - Bringing African stories to the world</p>
-        <p class="credits">Powered by NewsAPI | &copy; 2024 All rights reserved</p>
+        <p class="credits">Powered by BecksMeddit & NewsAPI | &copy; 2024</p>
     </footer>
 
-    <!-- JAVASCRIPT FILES: Load scripts in order -->
-    <!-- CORRECT ORDER - Very important! -->
-    <script src="config.js"></script> <!-- 1. Config first -->
-    <script src="cache.js"></script> <!-- 2. Cache second -->
-    <script src="api.js"></script> <!-- 3. API third (needs Cache) -->
-    <script src="script.js"></script> <!-- 4. Main script last -->
-    </body>
-    
+    <!-- Load JavaScript files in order -->
+    <script src="config.js"></script>
+    <script src="cache.js"></script>
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+</body>
+
 </html>
