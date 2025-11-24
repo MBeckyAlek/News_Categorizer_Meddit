@@ -1,4 +1,4 @@
-# Meddit - African News Categirizer 🌍
+# Meddit - African News Categorizer 🌍
 
 A Reddit-inspired news platform dedicated exclusively to African news. Clean interface, smart filtering, and dark mode support.
 
@@ -46,7 +46,7 @@ A Reddit-inspired news platform dedicated exclusively to African news. Clean int
 
 1. Open the `config.js` file
 2. Replace `YOUR_API_KEY_HERE` with your actual API key:
-```javascript
+```JavaScript
    const CONFIG = {
        API_KEY: 'your-actual-api-key-here',
        BASE_URL: 'https://newsapi.org/v2',
@@ -135,7 +135,7 @@ Meddit is deployed across 3 servers with load balancing:
             ┌────────────┴────────────┐
             │                         │
          Web01                     Web02
-    3.80.188.154              [Your Web02 IP]
+    3.80.188.154              [3.88.237.223]
     (Nginx Server)            (Nginx Server)
 ```
 
@@ -158,7 +158,7 @@ Meddit is deployed across 3 servers with load balancing:
 
 **Root Cause**: NewsAPI free tier allows localhost and server-side requests but blocks browser requests from deployed domains.
 
-**Current Solution**: Application fully functional locally with complete deployment infrastructure. API limitation documented with local testing instructions.
+**Current Solution**: Application is fully functional locally with a complete deployment infrastructure. API limitation documented with local testing instructions.
 
 **Production Solutions (Future)**:
 1. Backend proxy (PHP/Node.js) for server-side calls
