@@ -1,6 +1,6 @@
-
+// ========================================
 // NEWS API HANDLER - AFRICAN NEWS ONLY
-// Fetches ONLY African news using multiple filtering strategies
+// ========================================
 
 const NewsAPI = {
 
@@ -13,9 +13,7 @@ const NewsAPI = {
         'Zambia', 'Somalia', 'Senegal', 'Chad', 'Zimbabwe',
         'Rwanda', 'Benin', 'Burundi', 'Tunisia', 'Togo',
         'Sierra Leone', 'Libya', 'Liberia', 'Mauritania', 'Botswana',
-        'Namibia', 'Gambia', 'Gabon', 'Lesotho', 'Guinea',
-        'Equatorial Guinea', 'Mauritius', 'Swaziland', 'Djibouti',
-        'Reunion', 'Comoros', 'Cape Verde', 'Seychelles'
+        'Namibia', 'Gambia', 'Gabon', 'Lesotho', 'Guinea'
     ],
 
     // Build search query that includes African keywords
@@ -57,11 +55,11 @@ const NewsAPI = {
         // Check cache first to reduce API calls
         const cached = Cache.get(cacheKey);
         if (cached) {
-            console.log('Using cached African news for', category);
+            console.log('📦 Using cached African news for', category);
             return cached;
         }
 
-        console.log(' Fetching African news for category:', category);
+        console.log('🌍 Fetching African news for category:', category);
 
         // Build African-focused search query
         const query = this.buildAfricanQuery(category);
@@ -79,19 +77,19 @@ const NewsAPI = {
 
             // Check if request was successful
             if (!response.ok) {
-                throw new Error(`oops HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
 
             // Check API response status
             if (data.status !== 'ok') {
-                throw new Error(data.message || 'oops API error occurred');
+                throw new Error(data.message || 'API error occurred');
             }
 
-            console.log(` Received ${data.articles.length} articles from API`);
+            console.log(`📰 Received ${data.articles.length} articles from API`);
 
-            // Only keep articles that are actually about Africa
+            // STRICT FILTERING: Only keep articles that are actually about Africa
             let africanArticles = data.articles.filter(article => {
                 // Must have an image
                 const hasImage = article.urlToImage && article.urlToImage !== null;
@@ -102,11 +100,11 @@ const NewsAPI = {
                 return hasImage && isAfrican;
             });
 
-            console.log(` Filtered to ${africanArticles.length} African-only articles`);
+            console.log(`✅ Filtered to ${africanArticles.length} African-only articles`);
 
             // If we have very few results, try a backup search
             if (africanArticles.length < 5) {
-                console.log(' Few results, trying backup search...');
+                console.log('⚠️ Few results, trying backup search...');
                 const backupArticles = await this.fetchBackupAfrican(category, sortBy);
                 africanArticles = [...africanArticles, ...backupArticles].slice(0, CONFIG.PAGE_SIZE);
             }
@@ -117,14 +115,14 @@ const NewsAPI = {
             return africanArticles;
 
         } catch (error) {
-            console.error(' oops API Error:', error);
+            console.error('❌ API Error:', error);
             throw error;
         }
     },
 
     // Backup method: Try different search strategy if main search fails
     fetchBackupAfrican: async function (category, sortBy) {
-        console.log('chill, Trying backup African news search...');
+        console.log('🔄 Trying backup African news search...');
 
         // Use simpler, broader search
         const simpleQuery = category === 'general' ? 'Africa news' : `Africa ${category}`;
@@ -149,7 +147,7 @@ const NewsAPI = {
             return [];
 
         } catch (error) {
-            console.error('sigh Backup search failed:', error);
+            console.error('❌ Backup search failed:', error);
             return [];
         }
     },
@@ -166,11 +164,11 @@ const NewsAPI = {
         // Check cache first
         const cached = Cache.get(cacheKey);
         if (cached) {
-            console.log(' Using cached search for', query);
+            console.log('📦 Using cached search for', query);
             return cached;
         }
 
-        console.log(' Searching African news for:', query);
+        console.log('🔍 Searching African news for:', query);
 
         // Combine user query with African context
         // This ensures results are about Africa even when searching general terms
@@ -188,23 +186,23 @@ const NewsAPI = {
             const response = await fetch(url);
 
             if (!response.ok) {
-                throw new Error(`oops HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
 
             if (data.status !== 'ok') {
-                throw new Error(data.message || 'sigh Search failed');
+                throw new Error(data.message || 'Search failed');
             }
 
-            console.log(` Found ${data.articles.length} search results`);
+            console.log(`📰 Found ${data.articles.length} search results`);
 
             // Filter to only African articles with images
             const africanResults = data.articles.filter(article =>
                 article.urlToImage && this.isAfricanNews(article)
             );
 
-            console.log(` Filtered to ${africanResults.length} African search results`);
+            console.log(`✅ Filtered to ${africanResults.length} African search results`);
 
             // Cache the search results
             Cache.set(cacheKey, africanResults);
@@ -212,50 +210,8 @@ const NewsAPI = {
             return africanResults;
 
         } catch (error) {
-            console.error('sigh Search Error:', error);
+            console.error('❌ Search Error:', error);
             throw error;
-        }
-    },
-
-    // Get headlines from major African news sources
-    fetchFromAfricanSources: async function (sortBy = 'publishedAt') {
-        const cacheKey = `african_sources_${sortBy}`;
-
-        const cached = Cache.get(cacheKey);
-        if (cached) {
-            return cached;
-        }
-
-        console.log(' Fetching from African news sources...');
-
-        // Major international sources that cover African news extensively
-        const sources = 'bbc-news,al-jazeera-english,the-washington-post,cnn,reuters';
-
-        const url = `${CONFIG.BASE_URL}/everything?` +
-            `q=Africa&` +
-            `sources=${sources}&` +
-            `pageSize=${CONFIG.PAGE_SIZE}&` +
-            `sortBy=${sortBy}&` +
-            `apiKey=${CONFIG.API_KEY}`;
-
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-
-            if (data.status === 'ok') {
-                const africanArticles = data.articles.filter(article =>
-                    article.urlToImage && this.isAfricanNews(article)
-                );
-
-                Cache.set(cacheKey, africanArticles);
-                return africanArticles;
-            }
-
-            return [];
-
-        } catch (error) {
-            console.error('sigh Sources Error:', error);
-            return [];
         }
     }
 };
