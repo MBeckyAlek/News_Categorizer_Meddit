@@ -3,7 +3,7 @@
 A Reddit-inspired news platform dedicated exclusively to African news. Clean interface, smart filtering, and dark mode support.
 
 ## Demo Video
-[Demo video URL](your-youtube-link-here)
+[Demo video URL](https://youtu.be/r7A_pAptRkg)
 
 ## Deployment URL
 ```
